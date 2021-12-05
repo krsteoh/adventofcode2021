@@ -8,6 +8,6 @@ namespace AdventOfCode
 {
     public class Config
     {
-        public const string LocalPath= @"C:\Users\krste.iloski\source\repos\AdventOfCode\";
+        public const string LocalPath= @"C:\code\AdventOfCode2021\adventofcode2021\";
     }
 }
