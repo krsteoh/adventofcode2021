@@ -29,7 +29,7 @@ namespace AdventOfCode.Day7
 
         public static string DoTask2(List<int> l)
         {
-            return DoTask(l, CalcRate2);
+            return DoTask(l, CalcRate2_V2);
         }
         public static string DoTask1()
         {
@@ -46,15 +46,21 @@ namespace AdventOfCode.Day7
         private static int CalcRate2(int num, Elem item)
         {
             int dif = Math.Abs(num - item.Value);
+
             int rate = 0;
             for (int i = 1; i <= dif; i++) rate += i;
-            
+
             return rate;
         }
-
+        private static int CalcRate2_V2(int num, Elem item)
+        {
+            int dif = Math.Abs(num - item.Value);
+            return dif * (dif + 1) / 2;
+        }
         private static string DoTask(List<int> l,Func<int,Elem,int> calculateRate)
         {
             var list = l.GroupBy(t => t).Select(t => new Elem { Value = t.Key, Count = t.Count() }).ToList();
+   
             int maxNum = l.Max();
             int minNum = l.Min();
             int minVal = -1;
