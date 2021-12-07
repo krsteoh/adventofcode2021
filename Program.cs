@@ -4,6 +4,7 @@ using AdventOfCode.Day3;
 using AdventOfCode.Day4;
 using AdventOfCode.Day5;
 using AdventOfCode.Day6;
+using AdventOfCode.Day7;
 using System;
 using System.Collections.Generic;
 
@@ -18,7 +19,8 @@ namespace AdventOfCode
             //Task3.Start();
             //Task4.Start();
             //Task5.Start();
-            Task6.Start();
+            //Task6.Start();
+            Task7.Start();
         }
     }
 }
