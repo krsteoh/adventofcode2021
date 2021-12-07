@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,10 +16,10 @@ namespace AdventOfCode.Day7
         public static void Start()
         {
             Console.WriteLine(Day + "-  Task1 Test Result = " + DoTask1(inputList));
-            Console.WriteLine(Day + "-  Task1 Result = " + DoTask1());
+            GlobalFunctions.ConsolePrintTask(string.Format("{0}- Task1 Result = ", Day), DoTask1);
 
             Console.WriteLine(Day + "-  Task2 Test Result = " + DoTask2(inputList));
-            Console.WriteLine(Day + "-  Task2 Result = " + DoTask2());
+            GlobalFunctions.ConsolePrintTask(string.Format("{0}- Task2 Result = ", Day), DoTask2);
         }
 
         public static string DoTask1(List<int> l)
@@ -46,8 +47,7 @@ namespace AdventOfCode.Day7
         {
             int dif = Math.Abs(num - item.Value);
             int rate = 0;
-            for (int i = 1; i <= dif; i++)
-             rate += i;
+            for (int i = 1; i <= dif; i++) rate += i;
             
             return rate;
         }
