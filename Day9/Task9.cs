@@ -24,8 +24,8 @@ namespace AdventOfCode.Day9
         {
             int[,] matrix = CreateMatrix(l);
             var points = new List<Point>();
-                FindMinPoints(matrix, points);
-
+               FindMinPoints(matrix, points);
+           
             List<int> counts = new List<int>();
             foreach (var point in points)
             {
@@ -133,28 +133,27 @@ namespace AdventOfCode.Day9
             {
                 if (points.Any(t => t.x == item.x && t.y == item.y)) continue;
 
-                bool minOneCompare = false;
                 int li = item.y;
                 int lj = item.x - 1;
                 if (lj >= 0 && (!points.Any(t => t.x == lj && t.y == li) && item.value >= matrix[li, lj])) continue;
-                else if (lj >= 0 && item.value < matrix[li, lj]) minOneCompare = true;
+           
 
                 int ri = item.y;
                 int rj = item.x + 1;
                 if (rj <= (cols - 1) && (!points.Any(t => t.x == rj && t.y == ri) && item.value >= matrix[ri, rj])) continue;
-                else if (!minOneCompare && rj <= (cols - 1) && item.value < matrix[ri, rj]) minOneCompare = true;
+            
 
                 int ui = item.y - 1;
                 int uj = item.x;
                 if (ui >=0 && (!points.Any(t => t.x == uj && t.y == ui) && item.value >= matrix[ui, uj])) continue;
-                else if (!minOneCompare &&  ui >= 0 && item.value < matrix[ui, uj]) minOneCompare = true;
+              
 
                 int di = item.y + 1;
                 int dj = item.x;
                 if (di <= (rows - 1) && (!points.Any(t => t.x == dj && t.y == di) && item.value >= matrix[di, dj])) continue;
-                else if (!minOneCompare && di <= (rows - 1) && item.value < matrix[di, dj]) minOneCompare = true;
+               
 
-                if(minOneCompare)
+                if(item.value<9)
                 points.Add(new Point { y = item.y, x = item.x, value = matrix[item.y, item.x] });
 
                 FindBasin(matrix, item, points);
