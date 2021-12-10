@@ -22,30 +22,23 @@ namespace AdventOfCode.Day9
         }
         public static string DoTask2(List<string> l)
         {
-            int[,] matrix = CreateMatrix(l);
-            var points = new List<Point>();
-               FindMinPoints(matrix, points);
-           
             List<int> counts = new List<int>();
+            int[,] matrix = CreateMatrix(l);
+            var points = FindMinPoints(matrix);
             foreach (var point in points)
             {
-
                 var pp = new List<Point>();
-                 pp.Add(point);
+                pp.Add(point);
                 FindBasin(matrix, point, pp);
                 counts.Add(pp.Count);
-               
             }
-
             return counts.OrderByDescending(t=>t).Take(3).Aggregate((a,x)=>a*x).ToString();
         }
 
         public static string DoTask1(List<string> l)
         {
             int[,] matrix = CreateMatrix(l);
-            var points = new List<Point>();
-            FindMinPoints(matrix, points);
-            return points.Select(t => t.value + 1).Sum().ToString();
+            return FindMinPoints(matrix).Select(t => t.value + 1).Sum().ToString();
         }
         public static string DoTask1Test()
         {
@@ -73,17 +66,15 @@ namespace AdventOfCode.Day9
             for (int i = 0; i < rowsNum; i++)
             {
                 var cols = l[i].Trim().ToArray();
-
                 for (int j = 0; j < colsNum; j++)
                  matrix[i, j] = int.Parse(cols[j].ToString());
-                
             }
             return matrix;
         }
 
-        public static void FindMinPoints(int[,] matrix, List<Point> points)
+        public static List<Point> FindMinPoints(int[,] matrix)
         {
-
+            List<Point> points = new List<Point>();
             int rows = matrix.GetLength(0);
             int cols = matrix.GetLength(1);
          
@@ -114,8 +105,7 @@ namespace AdventOfCode.Day9
                     points.Add(new Point { y = i, x = j,value= cPoint });
                 }
             }
-
-           
+            return points;
         }
         public static void FindBasin(int[,] matrix,Point point, List<Point> points)
         {
