@@ -27,6 +27,8 @@ namespace AdventOfCode.Day10
 
         public static string DoTask1(List<string> l)
         {
+
+
             return null;
         }
         public static string DoTask1Test()
