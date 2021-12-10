@@ -119,12 +119,12 @@ namespace AdventOfCode.Day9
         }
         public static void FindBasin(int[,] matrix,Point point, List<Point> points)
         {
+           // DrawMatrix(matrix, points);
             int rows = matrix.GetLength(0);
             int cols = matrix.GetLength(1);
             var list = new List<Point>();
             
             if(point.x - 1>=0) list.Add(new Point { x = point.x - 1, y = point.y, value = matrix[point.y,point.x-1]});
-
             if (point.x + 1 <= cols-1) list.Add(new Point { x = point.x + 1, y = point.y, value = matrix[point.y, point.x+1] });
             if (point.y - 1 >= 0) list.Add(new Point { x = point.x , y = point.y-1, value = matrix[point.y-1, point.x]});
             if (point.y + 1 <= rows - 1) list.Add(new Point { x = point.x, y = point.y + 1, value = matrix[point.y+1, point.x] });
@@ -132,34 +132,60 @@ namespace AdventOfCode.Day9
             foreach(var item in list)
             {
                 if (points.Any(t => t.x == item.x && t.y == item.y)) continue;
-
                 int li = item.y;
                 int lj = item.x - 1;
-                if (lj >= 0 && (!points.Any(t => t.x == lj && t.y == li) && item.value >= matrix[li, lj])) continue;
+                if (lj >= 0 && (!points.Any(t => t.x == lj && t.y == li) && item.value > matrix[li, lj])) continue;
            
 
                 int ri = item.y;
                 int rj = item.x + 1;
-                if (rj <= (cols - 1) && (!points.Any(t => t.x == rj && t.y == ri) && item.value >= matrix[ri, rj])) continue;
+                if (rj <= (cols - 1) && (!points.Any(t => t.x == rj && t.y == ri) && item.value > matrix[ri, rj])) continue;
             
 
                 int ui = item.y - 1;
                 int uj = item.x;
-                if (ui >=0 && (!points.Any(t => t.x == uj && t.y == ui) && item.value >= matrix[ui, uj])) continue;
+                if (ui >=0 && (!points.Any(t => t.x == uj && t.y == ui) && item.value > matrix[ui, uj])) continue;
               
 
                 int di = item.y + 1;
                 int dj = item.x;
-                if (di <= (rows - 1) && (!points.Any(t => t.x == dj && t.y == di) && item.value >= matrix[di, dj])) continue;
+                if (di <= (rows - 1) && (!points.Any(t => t.x == dj && t.y == di) && item.value > matrix[di, dj])) continue;
                
 
                 if(item.value<9)
-                points.Add(new Point { y = item.y, x = item.x, value = matrix[item.y, item.x] });
-
-                FindBasin(matrix, item, points);
+                {
+                    points.Add(new Point { y = item.y, x = item.x, value = matrix[item.y, item.x] });
+                    FindBasin(matrix, item, points);
+                }
+                
             }
 
         }
+
+        public static void DrawMatrix(int[,] matrix,List<Point> points)
+        {
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+            
+
+            for (int i = 0; i < rows; i++)
+            {
+                var pp = points.Where(t => t.y == i).Select(t => t).ToList();
+                string str = "";
+                for (int j = 0; j < cols; j++)
+                {
+                    Point? it = pp.FirstOrDefault(t => t.x == j);
+                    if (it == null) str += "_";
+                    else str += it.Value.value;
+
+
+                }
+                  
+                Console.WriteLine(str);
+
+            }
+        }
+
 
         public struct Point
         {
