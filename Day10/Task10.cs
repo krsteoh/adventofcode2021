@@ -10,13 +10,13 @@ namespace AdventOfCode.Day10
     {
         const int day = 10;
         static string Day = string.Format("Day{0}", day);
-        static string FilePath = string.Format(@"Day{0}\d{0}1.txt", day);
+        static string FilePath = string.Format(@"Day{0}\d{0}.txt", day);
         static string TestFilePath = string.Format(@"Day{0}\d{0}test.txt", day);
 
         public static void Start()
         {
             GlobalFunctions.ConsolePrintTask(string.Format("{0}- Task1 Test Result = ", Day), DoTask1Test);
-            //GlobalFunctions.ConsolePrintTask(string.Format("{0}- Task1 Result = ", Day), DoTask1);
+            GlobalFunctions.ConsolePrintTask(string.Format("{0}- Task1 Result = ", Day), DoTask1);
             //GlobalFunctions.ConsolePrintTask(string.Format("{0}- Task1 Test Result = ", Day), DoTask2Test);
             //GlobalFunctions.ConsolePrintTask(string.Format("{0}- Task2 Result = ", Day), DoTask2);
         }
@@ -27,9 +27,33 @@ namespace AdventOfCode.Day10
 
         public static string DoTask1(List<string> l)
         {
+            var openArr = "<[{(".ToArray();
+            // var closeArr = ">]})".ToArray();
+            long ret = 0;
+            List<string> results = new List<string>();
+            foreach(var item in l)
+            {
+              
+                var q = new Stack<char>();
+                var arr = item.Trim().ToArray();
+            
+                for(int i=0;i<arr.Length;i++)
+                {
 
+                    if (openArr.Contains(item[i])) { q.Push(item[i]); continue; }
 
-            return null;
+                    var ii = q.Pop();
+                    if(ii!= Oposit(item[i]))
+                    {
+                        results.Add(String.Format("{0}:{1}", Oposit(ii), item[i]));
+                        ret += GetValue(item[i]);
+                    }
+                    
+                }
+
+            }
+
+            return ret.ToString();
         }
         public static string DoTask1Test()
         {
@@ -47,6 +71,40 @@ namespace AdventOfCode.Day10
         public static string DoTask2()
         {
             return DoTask2(System.IO.File.ReadAllLines(string.Format("{0}{1}", Config.LocalPath, FilePath)).ToList());
+        }
+
+        private static bool Compare(char open, char close)
+        {
+            if (open == '<' && close == '>') return true;
+            if (open == '[' && close == ']') return true;
+            if (open == '{' && close == '}') return true;
+            if (open == '(' && close == ')') return true;
+            return false;
+        }
+
+        private static char Oposit(char c)
+        {
+            if (c == '<' ) return '>';
+            if (c == '[' ) return ']';
+            if (c == '{' ) return '}';
+            if (c == '(') return ')';
+            if (c == '>') return '<';
+            if (c == ']') return '[';
+            if (c == '}') return '{';
+            if (c == ')') return '(';
+
+            return ' ';
+        }
+
+        private static int GetValue(char c)
+        {
+          
+            if (c == '>') return 25137;
+            if (c == ']') return 57;
+            if (c == '}') return 1197;
+            if (c == ')') return 3;
+
+            return ' ';
         }
     }
 }
