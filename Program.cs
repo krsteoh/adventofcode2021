@@ -1,6 +1,7 @@
 ﻿using AdventOfCode.Day1;
 using AdventOfCode.Day10;
 using AdventOfCode.Day11;
+using AdventOfCode.Day12;
 using AdventOfCode.Day2;
 using AdventOfCode.Day3;
 using AdventOfCode.Day4;
@@ -28,7 +29,8 @@ namespace AdventOfCode
             //Task8.Start();
             //Task9.Start();
             //Task10.Start();
-            Task11.Start();
+            //Task11.Start();
+            Task12.Start();
         }
     }
 }
